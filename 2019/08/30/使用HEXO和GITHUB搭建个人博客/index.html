@@ -140,7 +140,189 @@
             </div>
             <!-- Post -->
             <div class="typo" style="padding: 3rem;">
-                
+                <p><strong>写在建站前：</strong></p>
+<p>很久之前就想开一个关于自己的博客，来记录自己的生活，在许多年里面也试过许多的博客工具，从最基础的新浪博客、人人小站、网易 LOFTER，再到自己建站的 WordPress，却一直因为各类工具有着这样那样的问题而没有坚持下来。</p>
+<p>经过这么多轮反反复复的尝试，我也逐渐明确了自己真正的需求：</p>
+<ul>
+<li>不使用第三方工具。自己建站，既是保证了灵活性，也避免了因为第三方工具出现各种问题，带来巨大的迁移成本</li>
+<li>费用尽可能低。从服务、存储、流量三个环节来降低费用</li>
+<li>建站简便，维护简单。WordPress 被放弃的原因就是因为越来越臃肿的产品功能，MVC 分离的结构，给后期的维护和错误修复造成了巨大的困难</li>
+</ul>
+<p>一年前接触到 Github Page 之后一直觉得使用 Github 这个全球最知名的代码管理工具来存储网站是一个非常明智的选择，但是苦于没有合适的前端工具，来降低建站的成本，而最近，我发现 Hexo 完全满足了我使用 Github 来管理个人网站的需求，于是便马上投入建站，使用半天时间完成了基础的建站工作</p>
+<hr>
+<h3 id="建站流程"><a href="#建站流程" class="headerlink" title="建站流程"></a>建站流程</h3><h4 id="在本地安装-Hexo"><a href="#在本地安装-Hexo" class="headerlink" title="在本地安装 Hexo"></a>在本地安装 Hexo</h4><ul>
+<li>本次本地安装的硬件是一台 Macbook Pro 13-inch</li>
+<li>操作系统版本是 MacOS 10.14</li>
+</ul>
+<p>在安装 Hexo 前首先要在电脑上安装 Node.js 和 Git，最快的安装方式是从两者的官网上下载最新的版本进行安装：</p>
+<ul>
+<li>Node.js：<a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a></li>
+<li>Git：<a href="https://sourceforge.net/projects/git-osx-installer/" target="_blank" rel="noopener">https://sourceforge.net/projects/git-osx-installer/</a></li>
+</ul>
+<p>当 Node.js 和 Git 都安装完成后，就可以在终端（Terminal）中直接安装 Hexo 了，打开终端，直接使用以下代码进行安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>这里可能会因为无法获得管理员权限等问题报错，最稳妥的方式是加入以下参数强制安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm install -g hexo-cli --unsafe-perm</span><br></pre></td></tr></table></figure>
+
+<p>其中 sudo 是强制使用管理员权限，但是此时的管理员权限默认是 nobody，无法进行写文件的操作。为了避免这种情况，要加 <code>--unsafe-perm</code> 参数，这样就不会切换到 nobody 上，运行时是哪个用户就是哪个用户。</p>
+<h4 id="在本地搭建网站"><a href="#在本地搭建网站" class="headerlink" title="在本地搭建网站"></a>在本地搭建网站</h4><p>在把网站发布到公网之前，首先要在本地搭建，通过以下代码创建一个网站，以在 Documents 文件夹下的 Hexo 文件夹内创建网站为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init Documents/Hexo</span><br><span class="line">$ cd Documents/Hexo</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>创建完成后，文件夹的目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li>_config.yml：网站的配置信息，可以配置网站的大部分参数</li>
+<li>package.json：应用程序的信息</li>
+<li>scaffolds：文章的模板信息</li>
+<li>source：用于存放用户的资源，如文章、图片等</li>
+<li>themes：主题文件夹，用于存放网站的主题文件</li>
+</ul>
+<h4 id="在-config-yml-中修改网站配置"><a href="#在-config-yml-中修改网站配置" class="headerlink" title="在 _config.yml 中修改网站配置"></a>在 _config.yml 中修改网站配置</h4><p><strong>修改网站的基本信息：</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>网站标题</td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>网站副标题</td>
+</tr>
+<tr>
+<td>description</td>
+<td>网站描述，一般用于 SEO，通常都包含网站的关键词</td>
+</tr>
+<tr>
+<td>keyword</td>
+<td>网站的关键词，使用半角逗号进行分隔</td>
+</tr>
+<tr>
+<td>author</td>
+<td>网站的作者</td>
+</tr>
+<tr>
+<td>language</td>
+<td>网站使用的语言，通常是 en 或 zh-CN</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>网站的时区，默认使用电脑的时区，中国的时区是 Asia/Shanghai</td>
+</tr>
+</tbody></table>
+<p><strong>修改网址信息：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">描述</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">url</td>
+<td align="left">网址</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">root</td>
+<td align="left">网站根目录</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">permalink</td>
+<td align="left">文章的永久链接格式</td>
+<td align="left"><code>:year/:month/:day/:title/</code></td>
+</tr>
+<tr>
+<td align="left">permalink_defaults</td>
+<td align="left">永久链接中各部分的默认值</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>如果网站是存放在子目录中，例如 <code>http://yoursite.com/blog</code>，那么 <code>url</code> 需要设为 <code>http://yoursite.com/blog</code> ，同时把 <code>root</code> 设为 <code>/blog/</code></p>
+<p><strong>修改主题信息：</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>theme</td>
+<td>主题名</td>
+</tr>
+</tbody></table>
+<p>其他部分的内容暂时不需要修改</p>
+<h4 id="在本地生成网站"><a href="#在本地生成网站" class="headerlink" title="在本地生成网站"></a>在本地生成网站</h4><p>使用以下代码在本地生成网站：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p>执行完毕后，在 <code>public</code> 目录能看到博客文档（.md文件）与主题模板组合，生成的最终静态网站文件，该目录是之后要发布到 GitHub 上的实际文件，同时也可以使用以下代码，在本地开启服务，预览网站的实际效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>服务启动后，可以通过访问本地地址 <code>http://localhost:4000/</code> 来预览网站的效果</p>
+<p>在网站有修改和改动时，也可以直接通过以下指令清除缓存和已经生成的 public 文件夹，方便再次生成，避免缓存影响实际效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<h4 id="将网站发布到-Github"><a href="#将网站发布到-Github" class="headerlink" title="将网站发布到 Github"></a>将网站发布到 Github</h4><p><strong>创建 Github 仓库</strong></p>
+<p>在 GitHub 中，创建新仓库，标准命名为 <code>GitHub用户名.github.io</code></p>
+<p><strong>在本地创建新的 SSH 密钥</strong></p>
+<p>通过邮箱地址，生成一对新的 SSH 密钥：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;email@example.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>之后输入存储密钥文件的路径，也可以直接回车，存放在默认地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enter file in which to save the key (/c/Users/you/.ssh/id_rsa): [Press enter]</span><br></pre></td></tr></table></figure>
+
+<p>下一步是输入两遍密码，密码输入正确之后，看到以下内容，表示 SSH 密钥已经生成成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Your identification has been saved in /c/Users/you/.ssh/id_rsa.</span><br><span class="line">Your public key has been saved in /c/Users/you/.ssh/id_rsa.pub.</span><br><span class="line">The key fingerprint is:</span><br><span class="line">01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>在 Github 账户中添加公钥</strong></p>
+<p>使用复制代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pbcopy &lt; ~/存放公钥的路径/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>或者使用 sublime 打开公钥文件，直接复制公钥到剪贴板，在 GitHub 的账户设置（Account Settings）中，选择 SSH Keys，新建一个密钥，粘贴刚刚复制的内容即可</p>
+<p>最后检查设置是否成功，通过下面代码来检查：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>在返回的结果后，输入 yes 并回车：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host &apos;github.com (207.97.227.239)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
+
+<p>见到如下的警告内容，表示配置已经成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Warning: Permanently added &apos;gitee.com,xxx.xxx.xxx.xxx&apos; (ECDSA) to the list of known hosts.</span><br><span class="line">ssh_packet_read: Connection closed</span><br></pre></td></tr></table></figure>
+
+<p><strong>设置 Git 提交的用户信息</strong></p>
+<p>Git 会根据用户的名字和邮箱来记录提交，输入下面的代码进行个人信息的设置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;用户名&quot;</span><br><span class="line">$ git config --global user.email  &quot;邮箱地址&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>发布到 Github</strong></p>
+<p>首先修改博客的配置文件 _config.yml 的 deploy 部分：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: GitHub 仓库的完整路径，https://github.com/a/a.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure>
+
+<p>修改完成后通过以下代码直接发布：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<p>发布成功后，可以在外网通过默认地址 <code>https://Github用户名.github.io/</code> ，直接查看网站，建站工作第一步完成</p>
+<hr>
+<p>参考资料列表：</p>
+<ul>
+<li><p>Hexo 官方文档：<a href="https://hexo.io/zh-cn/docs/index.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/index.html</a></p>
+</li>
+<li><p>root 权限 npm 全局安装：<a href="https://blog.csdn.net/weixin_34082177/article/details/94009746" target="_blank" rel="noopener">https://blog.csdn.net/weixin_34082177/article/details/94009746</a></p>
+</li>
+<li><p>使用Hexo搭建GitHub博客（2018年Mac版）：<a href="https://www.jianshu.com/p/cb0750324e26" target="_blank" rel="noopener">https://www.jianshu.com/p/cb0750324e26</a></p>
+</li>
+<li><p>【2018更新】小白独立搭建博客–Github Pages和Hexo简明教程：<a href="https://my.oschina.net/ryaneLee/blog/638440" target="_blank" rel="noopener">https://my.oschina.net/ryaneLee/blog/638440</a></p>
+</li>
+</ul>
+
             </div>
 
             <!-- Post Comments -->
